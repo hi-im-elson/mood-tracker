@@ -8,7 +8,7 @@ db = SQLAlchemy(app)
 
 class Mood(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    mood = db.Column(db.String(2), nullable=False)
+    rating = db.Column(db.String(2), nullable=False)
     description = db.Column(db.String(200), nullable=False)
     completed = db.Column(db.Integer, default=0)
     date_created = db.Column(db.DateTime, default=datetime.utcnow)
@@ -20,9 +20,9 @@ class Mood(db.Model):
 @app.route("/", methods=["POST", "GET"])
 def index():
     if request.method == "POST":
-        mood = request.form["rating"]
+        rating = request.form["rating"]
         description = request.form["description"]
-        new_mood = Mood(mood=mood, description=description)
+        new_mood = Mood(rating=rating, description=description)
 
         try:
             db.session.add(new_mood)
